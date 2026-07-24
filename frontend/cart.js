@@ -67,8 +67,8 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
   };
 
   try {
-    const response = await fetch("http://localhost:5000/api/orders", {
-      method: "POST",
+const response = await fetch("https://codealpha-ecommerce-store-bqv6.onrender.com/api/orders", {
+        method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orderData),
     });

@@ -1,5 +1,4 @@
-const API_URL = "http://localhost:5000/api/users";
-
+const API_URL = "https://codealpha-ecommerce-store-bqv6.onrender.com/api/users";
 const loginForm = document.getElementById("login-form");
 const registerForm = document.getElementById("register-form");
 const toggleLink = document.getElementById("toggle-link");

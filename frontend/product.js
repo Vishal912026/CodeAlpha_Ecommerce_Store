@@ -3,7 +3,7 @@ const productId = params.get("id");
 
 async function loadProductDetails() {
   try {
-    const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+const response = await fetch(`https://codealpha-ecommerce-store-bqv6.onrender.com/api/products/${productId}`);
     const product = await response.json();
 
     const detailsBox = document.getElementById("product-details");
