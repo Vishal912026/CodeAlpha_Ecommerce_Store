@@ -1,6 +1,9 @@
 # ShopEasy - E-commerce Store
 
+## 🚀 Live Demo
 
+- **Frontend (Live Site):** [https://dancing-crumble-b95745.netlify.app](https://dancing-crumble-b95745.netlify.app)
+- **Backend (API):** [https://codealpha-ecommerce-store-bqv6.onrender.com](https://codealpha-ecommerce-store-bqv6.onrender.com)
 This is my Task 1 project for the CodeAlpha Full Stack Development Internship. I built a simple e-commerce website where users can browse products, view product details, add items to cart, and place orders.
 
 ## Features
