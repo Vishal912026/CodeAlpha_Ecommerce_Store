@@ -1,4 +1,4 @@
-const API_URL = "https://codealpha-ecommerce-store-bqv6.onrender.com/api/users";
+const API_URL = "https://codealpha-ecommerce-store-bqv6.onrender.com/api/products";
 async function loadProducts() {
   try {
     const response = await fetch(API_URL);
