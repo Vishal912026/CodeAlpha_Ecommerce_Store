@@ -43,7 +43,8 @@ function setupUserMenu() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("userName");
-    window.location.href = "index.html";
+        window.location.href = "login.html";
+
   });
 
   loginLink.replaceWith(greeting, logoutLink);
