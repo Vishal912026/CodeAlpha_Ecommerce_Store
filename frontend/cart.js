@@ -47,41 +47,50 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
     return;
   }
 
-  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
-  if (!userId) {
+  if (!token) {
     alert("Please login first.");
     window.location.href = "login.html";
     return;
   }
 
-  const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+  
   const orderData = {
-    user: userId,
     products: cart.map((item) => ({
       product: item.id,
       quantity: item.quantity,
     })),
-    totalAmount,
   };
 
   try {
-const response = await fetch("https://codealpha-ecommerce-store-bqv6.onrender.com/api/orders", {
-        method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch("https://codealpha-ecommerce-store-bqv6.onrender.com/api/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
       body: JSON.stringify(orderData),
     });
+
+    const data = await response.json();
 
     if (response.ok) {
       alert("Order placed successfully!");
       localStorage.removeItem("cart");
       loadCart();
+    } else if (response.status === 401) {
+      alert("Session expired, please login again.");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userName");
+      window.location.href = "login.html";
     } else {
-      alert("Something went wrong placing the order.");
+      alert(data.message || "Something went wrong placing the order.");
     }
   } catch (error) {
     console.log("Checkout error:", error);
+    alert("Could not reach the server. Please try again.");
   }
 });
 
