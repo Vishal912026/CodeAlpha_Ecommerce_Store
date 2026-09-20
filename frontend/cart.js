@@ -1,6 +1,7 @@
 function loadCart() {
     updateCartCount();
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cart = getCart()
+;
   const cartList = document.getElementById("cart-list");
   const cartTotal = document.getElementById("cart-total");
 
@@ -34,14 +35,16 @@ function loadCart() {
 }
 
 function removeFromCart(id) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let cart = getCart()
+;
   cart = cart.filter((item) => item.id !== id);
-  localStorage.setItem("cart", JSON.stringify(cart));
+  saveCart(cart);
   loadCart();
 }
 
 document.getElementById("checkout-btn").addEventListener("click", async () => {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cart = getCart()
+;
 
   if (cart.length === 0) {
     alert("Your cart is empty.");
@@ -78,7 +81,7 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
 
     if (response.ok) {
       alert("Order placed successfully!");
-      localStorage.removeItem("cart");
+      localStorage.removeItem(getCartKey());
       loadCart();
     } else if (response.status === 401) {
       alert("Session expired, please login again.");

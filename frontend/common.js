@@ -1,13 +1,25 @@
-function updateCartCount() {
-    const cartLink = document.querySelector('nav a[href*="cart"]');
-    if (!cartLink) return;
+function getCartKey() {
+  const userId = localStorage.getItem("userId");
+  return userId ? "cart_" + userId : "cart";
+}
 
-  let cart = [];
+function getCart() {
   try {
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
+    return JSON.parse(localStorage.getItem(getCartKey())) || [];
   } catch (error) {
-    cart = [];
+    return [];
   }
+}
+
+function saveCart(cart) {
+  localStorage.setItem(getCartKey(), JSON.stringify(cart));
+}
+
+function updateCartCount() {
+  const cartLink = document.querySelector('nav a[href*="cart"]');
+  if (!cartLink) return;
+
+  const cart = getCart();
 
   let count = 0;
   cart.forEach((item) => {
@@ -25,8 +37,8 @@ function updateCartCount() {
 }
 
 function setupUserMenu() {
-     const loginLink = document.querySelector('nav a[href*="login"]');
-    const token = localStorage.getItem("token");
+  const loginLink = document.querySelector('nav a[href*="login"]');
+  const token = localStorage.getItem("token");
   const name = localStorage.getItem("userName");
 
   if (!loginLink || !token) return;
@@ -43,9 +55,7 @@ function setupUserMenu() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("userName");
-        localStorage.removeItem("cart");
-        window.location.href = "login.html";
-
+    window.location.href = "login.html";
   });
 
   loginLink.replaceWith(greeting, logoutLink);

@@ -26,7 +26,7 @@ const response = await fetch(`https://codealpha-ecommerce-store-bqv6.onrender.co
 }
 
 function addToCart(id, name, price) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let cart = getCart();
 
   const existingItem = cart.find((item) => item.id === id);
 
@@ -36,7 +36,7 @@ function addToCart(id, name, price) {
     cart.push({ id, name, price, quantity: 1 });
   }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  saveCart(cart);
     updateCartCount();
   alert(name + " added to cart!");
 }

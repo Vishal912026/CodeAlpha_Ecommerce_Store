@@ -48,6 +48,18 @@ loginForm.addEventListener("submit", async (e) => {
       localStorage.setItem("userId", data.user.id);
       localStorage.setItem("userName", data.user.name);
       localStorage.setItem("token", data.token);
+            const guestCart = JSON.parse(localStorage.getItem("cart")) || [];
+      const userCart = getCart();
+      guestCart.forEach((guestItem) => {
+        const found = userCart.find((item) => item.id === guestItem.id);
+        if (found) {
+          found.quantity += guestItem.quantity;
+        } else {
+          userCart.push(guestItem);
+        }
+      });
+      saveCart(userCart);
+      localStorage.removeItem("cart");
       alert("Login successful!");
       window.location.href = "index.html";
     } else {
