@@ -26,6 +26,7 @@ A full stack e-commerce website built as Task 1 of the CodeAlpha Full Stack Deve
 - **Other:** bcryptjs, jsonwebtoken, Thunder Client (API testing)
 
 
+
 ## How to Run Locally
 
 1. Clone the repository:
@@ -64,7 +65,7 @@ npm start
 
 6. Open `frontend/index.html` with the Live Server extension in VS Code.
 
-Note: the frontend files currently call the deployed backend URL. To use your local server, change the API URL in `script.js`, `cart.js`, `login.js` and `product.js` to `http://localhost:5000`.
+Note: the frontend files currently call the deployed backend. To use your local server, replace `https://codealpha-ecommerce-store-bqv6.onrender.com` with `http://localhost:5000` in `script.js`, `cart.js`, `login.js` and `product.js`.
 
 ## What I Learned
 
@@ -72,5 +73,5 @@ Building this project helped me understand how the frontend and backend connect 
 
 ## Author
 
-Vishal Kumar Prajapati
+**Vishal Kumar Prajapati**  
 Full Stack Development Intern
