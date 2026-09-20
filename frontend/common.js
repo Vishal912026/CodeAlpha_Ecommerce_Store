@@ -1,6 +1,6 @@
 function updateCartCount() {
-  const cartLink = document.querySelector('nav a[href="cart.html"]');
-  if (!cartLink) return;
+    const cartLink = document.querySelector('nav a[href*="cart"]');
+    if (!cartLink) return;
 
   let cart = [];
   try {
@@ -25,8 +25,8 @@ function updateCartCount() {
 }
 
 function setupUserMenu() {
-  const loginLink = document.querySelector('nav a[href="login.html"]');
-  const token = localStorage.getItem("token");
+     const loginLink = document.querySelector('nav a[href*="login"]');
+    const token = localStorage.getItem("token");
   const name = localStorage.getItem("userName");
 
   if (!loginLink || !token) return;
