@@ -1,28 +1,92 @@
 const API_URL = "https://codealpha-ecommerce-store-bqv6.onrender.com/api/products";
+
+const productList = document.getElementById("product-list");
+const searchInput = document.querySelector(".search-bar input");
+const searchButton = document.querySelector(".search-bar button");
+
+let allProducts = [];
+let loaded = false;
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function showMessage(text) {
+  productList.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; padding: 40px 0;">${text}</p>`;
+}
+
+function showProducts(products) {
+  productList.innerHTML = "";
+
+  if (products.length === 0) {
+    showMessage("No products found.");
+    return;
+  }
+
+  products.forEach((product) => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    card.innerHTML = `
+      <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" style="cursor: pointer;">
+      <h3 style="cursor: pointer;">${escapeHtml(product.name)}</h3>
+      <p>${escapeHtml(product.description)}</p>
+      <div class="price">₹${escapeHtml(product.price)}</div>
+      <button>Add to Cart</button>
+    `;
+
+    const openProduct = () => {
+      window.location.href = "product.html?id=" + encodeURIComponent(product._id);
+    };
+
+    card.querySelector("img").addEventListener("click", openProduct);
+    card.querySelector("h3").addEventListener("click", openProduct);
+    card.querySelector("button").addEventListener("click", () => {
+      addToCart(product._id, product.name, product.price);
+    });
+
+    productList.appendChild(card);
+  });
+}
+
+function filterProducts() {
+  if (!loaded) return;
+
+  const text = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+  const filtered = allProducts.filter((product) => {
+    return (
+      String(product.name).toLowerCase().includes(text) ||
+      String(product.description).toLowerCase().includes(text)
+    );
+  });
+
+  showProducts(filtered);
+}
+
 async function loadProducts() {
+  showMessage("Loading products... (the first load can take up to a minute)");
+
   try {
     const response = await fetch(API_URL);
     const products = await response.json();
 
-    const productList = document.getElementById("product-list");
-    productList.innerHTML = "";
+    if (!response.ok || !Array.isArray(products)) {
+      showMessage("Could not load products. Please try again in a moment.");
+      return;
+    }
 
-    products.forEach((product) => {
-      const card = document.createElement("div");
-      card.className = "product-card";
-
-     card.innerHTML = `
-  <img src="${product.image}" alt="${product.name}" onclick="window.location.href='product.html?id=${product._id}'" style="cursor: pointer;">
-  <h3 onclick="window.location.href='product.html?id=${product._id}'" style="cursor: pointer;">${product.name}</h3>
-  <p>${product.description}</p>
-  <div class="price">₹${product.price}</div>
-  <button onclick="addToCart('${product._id}', '${product.name}', ${product.price})">Add to Cart</button>
-`;
-
-      productList.appendChild(card);
-    });
+    allProducts = products;
+    loaded = true;
+    filterProducts();
   } catch (error) {
     console.log("Error loading products:", error);
+    showMessage("Could not reach the server. Please refresh in a minute.");
   }
 }
 
@@ -39,6 +103,18 @@ function addToCart(id, name, price) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
   alert(name + " added to cart!");
+}
+
+if (searchInput) {
+  searchInput.addEventListener("input", filterProducts);
+}
+if (searchButton) {
+  searchButton.addEventListener("click", filterProducts);
+}
+
+const searchWord = new URLSearchParams(window.location.search).get("search");
+if (searchWord && searchInput) {
+  searchInput.value = searchWord;
 }
 
 loadProducts();
