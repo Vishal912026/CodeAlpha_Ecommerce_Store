@@ -43,6 +43,7 @@ function setupUserMenu() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("userName");
+        localStorage.removeItem("cart");
         window.location.href = "login.html";
 
   });
