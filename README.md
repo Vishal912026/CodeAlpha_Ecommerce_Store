@@ -25,8 +25,6 @@ A full stack e-commerce website built as Task 1 of the CodeAlpha Full Stack Deve
 - **Database:** MongoDB Atlas (Mongoose)
 - **Other:** bcryptjs, jsonwebtoken, Thunder Client (API testing)
 
-
-
 ## How to Run Locally
 
 1. Clone the repository:

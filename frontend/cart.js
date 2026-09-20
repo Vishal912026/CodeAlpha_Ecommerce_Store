@@ -1,4 +1,5 @@
 function loadCart() {
+    updateCartCount();
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const cartList = document.getElementById("cart-list");
   const cartTotal = document.getElementById("cart-total");
